@@ -67,7 +67,7 @@ import {
 import { KnowledgeGraphWidget } from "@/polymet/components/knowledge-graph-widget";
 import { buildKnowledgeGraph } from "@/polymet/data/knowledge-graph";
 import { loadGuardrails } from "@/polymet/data/decision-guardrails";
-import { getAllIncidents } from "@/polymet/data/incident-matcher";
+
 import { getOutcomes } from "@/polymet/data/guardrail-auto-adjust";
 
 interface KPICardProps {
