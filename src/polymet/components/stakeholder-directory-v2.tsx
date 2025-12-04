@@ -49,7 +49,8 @@ export interface StakeholderDirectoryV2Props {
 export function StakeholderDirectoryV2({
   onStakeholderClick,
 }: StakeholderDirectoryV2Props) {
-  const { tenantId } = useTenant();
+  const { tenant } = useTenant();
+  const tenantId = tenant.tenantId;
   const { stakeholders, loading, createStakeholder } = useStakeholdersV2();
   const goalCounts = useStakeholdersWithGoalCounts();
 
@@ -63,7 +64,7 @@ export function StakeholderDirectoryV2({
   const [newDialogOpen, setNewDialogOpen] = useState(false);
   const [newName, setNewName] = useState("");
   const [newEmail, setNewEmail] = useState("");
-  const [newGroup, setNewGroup] = useState<StakeholderGroup>("C-Suite");
+  const [newGroup, setNewGroup] = useState<StakeholderGroup>("CEO");
   const [newType, setNewType] = useState<StakeholderType>("individual");
   const [creating, setCreating] = useState(false);
 
@@ -83,7 +84,7 @@ export function StakeholderDirectoryV2({
       // Reset form
       setNewName("");
       setNewEmail("");
-      setNewGroup("C-Suite");
+      setNewGroup("CEO");
       setNewType("individual");
       setNewDialogOpen(false);
     } catch (error) {

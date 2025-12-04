@@ -917,32 +917,41 @@ export function GoalFormV2({
 
   // Step 5: Dependencies
   if (currentStep === 5) {
-    const activeGoals = goals.filter((g) => g.status === "Active");
+    const activeGoals = goals.filter((g) => g.status === "active");
 
     const toggleDependency = (
       goalId: string,
       type: "depends_on" | "enables"
     ) => {
-      const existingIndex = (formData.dependencies || []).findIndex(
-        (d) => d.goalId === goalId && d.type === type
-      );
+      const deps = formData.dependencies || { depends_on: [], enables: [] };
+      const targetArray = type === "depends_on" ? deps.depends_on : deps.enables;
+      const existingIndex = targetArray.indexOf(goalId);
 
       if (existingIndex >= 0) {
-        const newDeps = [...(formData.dependencies || [])];
-        newDeps.splice(existingIndex, 1);
-        setFormData({ ...formData, dependencies: newDeps });
+        const newArray = [...targetArray];
+        newArray.splice(existingIndex, 1);
+        setFormData({
+          ...formData,
+          dependencies: {
+            ...deps,
+            [type]: newArray,
+          },
+        });
       } else {
         setFormData({
           ...formData,
-          dependencies: [...(formData.dependencies || []), { goalId, type }],
+          dependencies: {
+            ...deps,
+            [type]: [...targetArray, goalId],
+          },
         });
       }
     };
 
     const hasDependency = (goalId: string, type: "depends_on" | "enables") => {
-      return (formData.dependencies || []).some(
-        (d) => d.goalId === goalId && d.type === type
-      );
+      const deps = formData.dependencies || { depends_on: [], enables: [] };
+      const targetArray = type === "depends_on" ? deps.depends_on : deps.enables;
+      return targetArray.includes(goalId);
     };
 
     return (
@@ -1155,19 +1164,30 @@ export function GoalFormV2({
               </div>
             </div>
 
-            {(formData.dependencies || []).length > 0 && (
+            {((formData.dependencies?.depends_on?.length || 0) + (formData.dependencies?.enables?.length || 0)) > 0 && (
               <div>
                 <div className="text-xs text-muted-foreground mb-1">
                   Dependencies
                 </div>
                 <div className="space-y-1">
-                  {(formData.dependencies || []).map((dep, i) => {
-                    const goal = goals.find((g) => g.id === dep.goalId);
+                  {formData.dependencies?.depends_on?.map((goalId, i) => {
+                    const goal = goals.find((g) => g.id === goalId);
                     return (
-                      <div key={i} className="text-sm flex items-center gap-2">
+                      <div key={`dep-${i}`} className="text-sm flex items-center gap-2">
                         • {goal?.statement}
                         <Badge variant="outline" className="text-xs">
-                          {dep.type === "depends_on" ? "Depends On" : "Enables"}
+                          Depends On
+                        </Badge>
+                      </div>
+                    );
+                  })}
+                  {formData.dependencies?.enables?.map((goalId, i) => {
+                    const goal = goals.find((g) => g.id === goalId);
+                    return (
+                      <div key={`en-${i}`} className="text-sm flex items-center gap-2">
+                        • {goal?.statement}
+                        <Badge variant="outline" className="text-xs">
+                          Enables
                         </Badge>
                       </div>
                     );

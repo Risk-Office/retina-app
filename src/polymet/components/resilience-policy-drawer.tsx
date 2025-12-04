@@ -152,7 +152,8 @@ export function ResiliencePolicyDrawer({
   onAuditEvent,
   className,
 }: ResiliencePolicyDrawerProps) {
-  const { tenantId } = useTenant();
+  const { tenant } = useTenant();
+  const tenantId = tenant.tenantId;
   const [selectedRecommendations, setSelectedRecommendations] = useState<
     Set<string>
   >(new Set());

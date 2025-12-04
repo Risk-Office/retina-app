@@ -77,7 +77,8 @@ export function InterfaceLevelSelector({
   onLevelChange,
   showLabel = true,
 }: InterfaceLevelSelectorProps) {
-  const { tenantId } = useTenant();
+  const { tenant } = useTenant();
+  const tenantId = tenant.tenantId;
   const { toast } = useToast();
   const { level: globalLevel, setInterfaceLevel: setGlobalLevel } =
     useInterfaceLevelSettings(tenantId);

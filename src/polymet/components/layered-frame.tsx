@@ -49,11 +49,11 @@ export function LayeredFrame({
   className = "",
   variant = "default",
 }: LayeredFrameProps) {
-  const level = useInterfaceLevel();
+  const { interfaceLevel } = useInterfaceLevel();
 
   // Determine density based on level and compact prop
-  const isCompact = compact || level === "advanced";
-  const isSpacious = !compact && level === "basic";
+  const isCompact = compact || interfaceLevel === "advanced";
+  const isSpacious = !compact && interfaceLevel === "basic";
 
   // Get padding based on level
   const getPadding = () => {
@@ -89,7 +89,7 @@ export function LayeredFrame({
   };
 
   // Show helper text in basic mode
-  const showHelpers = level === "basic" && helpTip;
+  const showHelpers = interfaceLevel === "basic" && helpTip;
 
   return (
     <Card className={`${getVariantStyles()} ${className}`}>

@@ -125,8 +125,9 @@ export function GoalWizardV2({
         id: `kpi-${Date.now()}-${index}`,
         name: metric,
         target: 100,
-        current: 0,
         unit: "%",
+        direction: "higher_is_better" as const,
+        measurement_freq: "monthly" as const,
       })),
       owners: [],
       related_stakeholders: [],
@@ -207,25 +208,16 @@ export function GoalWizardV2({
 
       case 5: // Dependencies
         // Validate dependencies for cycles
-        if (formData.dependencies && formData.dependencies.length > 0) {
+        const deps = formData.dependencies;
+        if (deps && (deps.depends_on?.length > 0 || deps.enables?.length > 0)) {
           const existingDeps: GoalDependency[] = goals.map((g) => ({
             goalId: g.id,
-            dependsOn:
-              g.dependencies
-                ?.filter((d) => d.type === "depends_on")
-                .map((d) => d.goalId) || [],
-            enables:
-              g.dependencies
-                ?.filter((d) => d.type === "enables")
-                .map((d) => d.goalId) || [],
+            dependsOn: g.dependencies?.depends_on || [],
+            enables: g.dependencies?.enables || [],
           }));
 
-          const dependsOn = formData.dependencies
-            .filter((d) => d.type === "depends_on")
-            .map((d) => d.goalId);
-          const enables = formData.dependencies
-            .filter((d) => d.type === "enables")
-            .map((d) => d.goalId);
+          const dependsOn = deps.depends_on || [];
+          const enables = deps.enables || [];
 
           const validation = validateDependencies(
             "new-goal",
