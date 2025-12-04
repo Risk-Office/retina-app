@@ -6,7 +6,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { HelpCircleIcon } from "lucide-react";
-import { getTermDefinition } from "@/polymet/data/terms";
+import { TERMS } from "@/polymet/data/terms";
 
 export interface GlossaryTooltipProps {
   /**
@@ -91,9 +91,6 @@ export function GlossaryTooltip({
  * Helper function to get term definition from terms data
  */
 function getTermDefinition(term: string) {
-  // Import terms data
-  const { TERMS } = require("@/polymet/data/terms");
-  
   // Find term (case-insensitive)
   const termKey = Object.keys(TERMS).find(
     (key) => key.toLowerCase() === term.toLowerCase()
@@ -101,5 +98,10 @@ function getTermDefinition(term: string) {
   
   if (!termKey) return null;
   
-  return TERMS[termKey];
+  const termData = TERMS[termKey];
+  return {
+    technical: termData.tech,
+    plain: termData.label,
+    helpText: termData.help
+  };
 }

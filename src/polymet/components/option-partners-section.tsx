@@ -43,6 +43,11 @@ export interface Partner {
   credit_exposure: number;
   dependency_score: number;
   notes: string;
+  // Aliases for backward compatibility
+  name?: string;
+  relationship?: string;
+  dependencyScore?: number;
+  creditExposure?: number;
 }
 
 export interface OptionWithPartners {

@@ -65,6 +65,7 @@
     "jspdf": "^3.0.4",
     "jspdf-autotable": "^5.0.2",
     "leaflet": "^1.9.4",
+    "lovable-tagger": "^1.1.11",
     "lucide-react": "^0.477.0",
     "mapbox-gl": "^1.13.3",
     "moment": "^2.30.1",
