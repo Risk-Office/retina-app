@@ -308,7 +308,8 @@ export function ThemeProvider({
   decisionMode,
   enableRouteThemes = true,
 }: ThemeProviderProps) {
-  const { tenantId } = useTenant();
+  const { tenant } = useTenant();
+  const tenantId = tenant.tenantId;
   const location = useLocation();
 
   // Determine initial interface level with priority
@@ -525,7 +526,8 @@ export function useIsInterfaceLevel(level: ThemeLevel): boolean {
  */
 export function usePanelTheme(panelId: string, enabled: boolean = true): void {
   const { setInterfaceLevel } = useInterfaceLevel();
-  const { tenantId } = useTenant();
+  const { tenant } = useTenant();
+  const tenantId = tenant.tenantId;
 
   useEffect(() => {
     if (!enabled) return;
@@ -544,7 +546,8 @@ export function usePanelTheme(panelId: string, enabled: boolean = true): void {
  * @returns Theme level for the identifier
  */
 export function useResolveTheme(identifier: string): ThemeLevel {
-  const { tenantId } = useTenant();
+  const { tenant } = useTenant();
+  const tenantId = tenant.tenantId;
   return useMemo(
     () => resolveLayerTheme(identifier, tenantId),
     [identifier, tenantId]

@@ -62,7 +62,7 @@ export function DecisionStoryTimeline({
   const timelineEntries = useMemo<TimelineEntry[]>(() => {
     return entries.map((entry) => {
       // Find corresponding learning trace entry
-      const traceEntry = learningTrace.find((trace) => {
+      const traceEntry = learningTrace?.entries?.find((trace) => {
         // Match by timestamp (within 1 minute tolerance)
         return Math.abs(trace.timestamp - entry.entry_date) < 60000;
       });

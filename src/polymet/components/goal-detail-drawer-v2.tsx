@@ -264,7 +264,7 @@ export function GoalDetailDrawerV2({
                         {stakeholder?.name || "Unknown"}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {stakeholder?.role} • {stakeholder?.department}
+                        {stakeholder?.group} • {stakeholder?.type}
                       </p>
                     </div>
                     <Badge variant="outline">{owner.role}</Badge>

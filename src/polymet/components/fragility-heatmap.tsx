@@ -121,7 +121,8 @@ export function FragilityHeatmap({
   onOpenResiliencePolicy,
   onAuditEvent,
 }: FragilityHeatmapProps) {
-  const { tenantId } = useTenant();
+  const { tenant } = useTenant();
+  const tenantId = tenant.tenantId;
   const [hoveredCell, setHoveredCell] = useState<{
     portfolioId: string;
     dimension: keyof FragilityDimension;
