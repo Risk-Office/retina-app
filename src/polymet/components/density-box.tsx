@@ -37,11 +37,11 @@ export function DensityBox({
   className = "",
   as: Component = "div",
 }: DensityBoxProps) {
-  const level = useInterfaceLevel();
+  const { interfaceLevel } = useInterfaceLevel();
 
   // Determine density
-  const isCompact = compact || level === "advanced";
-  const isSpacious = !compact && level === "basic";
+  const isCompact = compact || interfaceLevel === "advanced";
+  const isSpacious = !compact && interfaceLevel === "basic";
 
   // Get spacing classes based on level and spacing prop
   const getSpacing = () => {
@@ -97,10 +97,10 @@ export function DensityGrid({
   columns = 2,
   className = "",
 }: DensityGridProps) {
-  const level = useInterfaceLevel();
+  const { interfaceLevel } = useInterfaceLevel();
 
-  const isCompact = compact || level === "advanced";
-  const isSpacious = !compact && level === "basic";
+  const isCompact = compact || interfaceLevel === "advanced";
+  const isSpacious = !compact && interfaceLevel === "basic";
 
   // Get grid columns based on level
   const getGridCols = () => {
@@ -173,10 +173,10 @@ export function DensityStack({
   align = "start",
   className = "",
 }: DensityStackProps) {
-  const level = useInterfaceLevel();
+  const { interfaceLevel } = useInterfaceLevel();
 
-  const isCompact = compact || level === "advanced";
-  const isSpacious = !compact && level === "basic";
+  const isCompact = compact || interfaceLevel === "advanced";
+  const isSpacious = !compact && interfaceLevel === "basic";
 
   // Get gap based on level
   const getGap = () => {

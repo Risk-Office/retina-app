@@ -2,14 +2,17 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { componentTagger } from "lovable-tagger"
 
-// ES Module equivalent of __dirname
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    react(),
+    mode === 'development' && componentTagger(),
+  ].filter(Boolean),
   server: {
+    host: "::",
     port: 8080
   },
   resolve: {
@@ -21,4 +24,4 @@ export default defineConfig({
       '(components)': path.resolve(__dirname, './src/(components)'),
     }
   }
-})
+}))
